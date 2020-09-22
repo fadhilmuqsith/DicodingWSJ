@@ -40,7 +40,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ListViewHolder>(){
                     .load(data.urlToImage)
                     .into(iv_item_image)
                 tv_item_title.text = data.title
-                if (data.author != "null" )  {
+                if (data.author != null )  {
                     tv_item_subtitle.text =  data.author
                 } else {
                     tv_item_subtitle.text = "Unknown Author"

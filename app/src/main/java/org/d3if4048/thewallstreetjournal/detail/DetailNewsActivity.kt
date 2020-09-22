@@ -39,7 +39,7 @@ class DetailNewsActivity : AppCompatActivity() {
     private fun showDetailNews(detailNews : News?){
         detailNews?.let {
             var simpleDate = detailNews.publishedAt.substring(0,10)
-            if (detailNews.author != "null" )  {
+            if (detailNews.author != null )  {
                 supportActionBar?.title = detailNews.author
             } else {
                 supportActionBar?.title = "Unknown Author"
