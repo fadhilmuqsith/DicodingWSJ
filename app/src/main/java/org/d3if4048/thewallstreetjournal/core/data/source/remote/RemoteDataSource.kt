@@ -3,6 +3,10 @@ package org.d3if4048.thewallstreetjournal.core.data.source.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import org.d3if4048.thewallstreetjournal.core.data.source.remote.network.ApiResponse
 import org.d3if4048.thewallstreetjournal.core.data.source.remote.network.ApiService
 import org.d3if4048.thewallstreetjournal.core.data.source.remote.response.ListNewsResponse
@@ -12,6 +16,7 @@ import org.d3if4048.thewallstreetjournal.core.data.source.remote.response.NewsRe
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 
 class RemoteDataSource private constructor(private val apiService: ApiService){
@@ -25,24 +30,22 @@ class RemoteDataSource private constructor(private val apiService: ApiService){
             }
     }
 
-    fun getAllNews(): LiveData<ApiResponse<List<NewsResponse>>>{
-            val resultData= MutableLiveData<ApiResponse<List<NewsResponse>>>()
-
-           val client = apiService.getList()
-            client.enqueue(object : Callback<ListNewsResponse>{
-                override fun onResponse(
-                    call: Call<ListNewsResponse>,
-                    response: Response<ListNewsResponse>
-                ) {
-                    val dataArray = response.body()?.articles
-                    resultData.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
-                }
-
-                override fun onFailure(call: Call<ListNewsResponse>, t: Throwable) {
-                    resultData.value = ApiResponse.Error(t.message.toString())
-                    Log.e("RemoteDataSource",t.message.toString())
-                }
-            })
-        return resultData
-    }
+   suspend fun getAllNews() : Flow<ApiResponse<List<NewsResponse>>> {
+       return flow {
+           try {
+               val response = apiService.getList()
+               val dataArray = response.articles
+               if (dataArray.isNotEmpty()){
+                   emit(ApiResponse.Success(response.articles))
+               }
+               else {
+                   emit(ApiResponse.Empty)
+               }
+           }
+           catch (e : Exception){
+               emit(ApiResponse.Error(e.toString()))
+               Log.e("RemoteDataSource",e.toString())
+           }
+       }.flowOn(Dispatchers.IO)
+   }
 }
