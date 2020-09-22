@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.content_detail_news_other.*
 import kotlinx.android.synthetic.main.item_list_news.view.*
 import org.d3if4048.thewallstreetjournal.R
 import org.d3if4048.thewallstreetjournal.core.data.source.local.entity.NewsEntity
+import org.d3if4048.thewallstreetjournal.core.domain.model.News
 import org.d3if4048.thewallstreetjournal.core.ui.ViewModelFactory
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -31,11 +32,11 @@ class DetailNewsActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(this)
         detailNewsViewModel = ViewModelProvider(this,factory)[DetailNewsViewModel::class.java]
 
-        val detailNews = intent.getParcelableExtra<NewsEntity>(EXTRA_DATA)
+        val detailNews = intent.getParcelableExtra<News>(EXTRA_DATA)
         showDetailNews(detailNews)
     }
 
-    private fun showDetailNews(detailNews : NewsEntity?){
+    private fun showDetailNews(detailNews : News?){
         detailNews?.let {
             var simpleDate = detailNews.publishedAt.substring(0,10)
             if (detailNews.author != "null" )  {
