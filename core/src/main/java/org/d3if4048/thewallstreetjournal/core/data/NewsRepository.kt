@@ -1,7 +1,6 @@
 package org.d3if4048.thewallstreetjournal.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.d3if4048.thewallstreetjournal.core.data.source.local.LocalDataSource
@@ -24,7 +23,7 @@ class NewsRepository(
         }
 
     override fun getAllNews() : Flow<Resource<List<News>>> =
-        object : NetworkBoundResource<List<News> , List<NewsResponse>>() {
+        object :NetworkBoundResource<List<News>, List<NewsResponse>>() {
             override fun loadFromDB(): Flow<List<News>> {
                 return  localDataSource.getAllNews().map { DataMapper.mapEntitiesToDomain(it) }
             }

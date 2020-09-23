@@ -1,10 +1,8 @@
 package org.d3if4048.thewallstreetjournal.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+
 import kotlinx.coroutines.flow.*
 import org.d3if4048.thewallstreetjournal.core.data.source.remote.network.ApiResponse
-import org.d3if4048.thewallstreetjournal.core.utils.AppExecutors
 
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
@@ -16,19 +14,35 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             when (val apiResponse = createCall().first()){
                 is ApiResponse.Success -> {
                     saveCallResult(apiResponse.data)
-                    emitAll(loadFromDB().map { Resource.Success(it) })
+                    emitAll(loadFromDB().map {
+                        Resource.Success(
+                            it
+                        )
+                    })
                 }
                 is ApiResponse.Empty -> {
-                    emitAll(loadFromDB().map { Resource.Success(it) })
+                    emitAll(loadFromDB().map {
+                        Resource.Success(
+                            it
+                        )
+                    })
                 }
                 is ApiResponse.Error -> {
                     onFetchFailed()
-                    emit(Resource.Error(apiResponse.errorMessage))
+                    emit(
+                        Resource.Error(
+                            apiResponse.errorMessage
+                        )
+                    )
                 }
             }
         }
         else {
-            emitAll(loadFromDB().map { Resource.Success(it) })
+            emitAll(loadFromDB().map {
+                Resource.Success(
+                    it
+                )
+            })
         }
     }
 

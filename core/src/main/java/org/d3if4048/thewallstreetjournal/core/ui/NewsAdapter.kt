@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_list_news.view.*
-import org.d3if4048.thewallstreetjournal.R
-import org.d3if4048.thewallstreetjournal.core.data.source.local.entity.NewsEntity
+import org.d3if4048.thewallstreetjournal.core.R
 import org.d3if4048.thewallstreetjournal.core.domain.model.News
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ListViewHolder>(){

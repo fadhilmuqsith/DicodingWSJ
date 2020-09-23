@@ -7,7 +7,7 @@ import org.d3if4048.thewallstreetjournal.core.data.source.local.room.NewsDao
 
 class LocalDataSource(private val newsDao: NewsDao){
     companion object {
-        private var instance :LocalDataSource? = null
+        private var instance : LocalDataSource? = null
     }
 
     fun getAllNews():Flow<List<NewsEntity>> = newsDao.getAllNews()
