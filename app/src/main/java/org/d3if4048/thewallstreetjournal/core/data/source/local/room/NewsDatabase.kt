@@ -16,15 +16,5 @@ abstract class NewsDatabase : RoomDatabase() {
     @Volatile
     private var INSTANCE: NewsDatabase? = null
 
-        fun getInstance(context : Context) : NewsDatabase =
-            INSTANCE ?: synchronized(this){
-            val instance= Room.databaseBuilder(
-                context.applicationContext,
-                NewsDatabase::class.java,
-                "News.db"
-            ).fallbackToDestructiveMigration().build()
-                INSTANCE = instance
-                instance
-            }
     }
 }

@@ -9,17 +9,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.d3if4048.thewallstreetjournal.R
 import org.d3if4048.thewallstreetjournal.core.ui.NewsAdapter
-import org.d3if4048.thewallstreetjournal.core.ui.ViewModelFactory
 import org.d3if4048.thewallstreetjournal.detail.DetailNewsActivity
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : Fragment() {
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private val favoriteViewModel: FavoriteViewModel by viewModel()
 
 
     override fun onCreateView(
@@ -40,8 +38,7 @@ class FavoriteFragment : Fragment() {
                 intent.putExtra(DetailNewsActivity.EXTRA_DATA,selectedData)
                 startActivity(intent)
             }
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            favoriteViewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
+
 
             favoriteViewModel.favoriteNews.observe(viewLifecycleOwner, Observer { dataNews ->
                 newsAdapter.setData(dataNews)

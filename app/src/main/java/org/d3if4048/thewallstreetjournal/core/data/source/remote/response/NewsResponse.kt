@@ -22,5 +22,5 @@ data class NewsResponse (
     val publishedAt: String,
 
     @field:SerializedName("content")
-    val content: String
+    val content: String?
 )

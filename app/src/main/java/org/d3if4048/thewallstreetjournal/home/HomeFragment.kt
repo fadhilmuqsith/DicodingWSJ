@@ -9,18 +9,16 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_error.*
 import org.d3if4048.thewallstreetjournal.R
 import org.d3if4048.thewallstreetjournal.core.data.Resource
 import org.d3if4048.thewallstreetjournal.core.ui.NewsAdapter
-import org.d3if4048.thewallstreetjournal.core.ui.ViewModelFactory
 import org.d3if4048.thewallstreetjournal.detail.DetailNewsActivity
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +38,6 @@ class HomeFragment : Fragment() {
                 intent.putExtra(DetailNewsActivity.EXTRA_DATA,selectedData)
                 startActivity(intent)
             }
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            homeViewModel =ViewModelProvider(this,factory)[HomeViewModel::class.java]
 
             homeViewModel.news.observe(viewLifecycleOwner, Observer { news ->
                 if (news != null){

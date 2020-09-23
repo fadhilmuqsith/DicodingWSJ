@@ -14,22 +14,13 @@ import org.d3if4048.thewallstreetjournal.core.domain.repository.INewsRepository
 import org.d3if4048.thewallstreetjournal.core.utils.AppExecutors
 import org.d3if4048.thewallstreetjournal.core.utils.DataMapper
 
-class NewsRepository private constructor(
+class NewsRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors) : INewsRepository{
         companion object {
         @Volatile
         private var instance: NewsRepository? = null
-
-            fun getInstance(
-                remoteData: RemoteDataSource,
-                localData: LocalDataSource,
-                appExecutors: AppExecutors
-            ) : NewsRepository =
-                instance?: synchronized(this){
-                    instance?: NewsRepository(remoteData,localData,appExecutors)
-                }
         }
 
     override fun getAllNews() : Flow<Resource<List<News>>> =
