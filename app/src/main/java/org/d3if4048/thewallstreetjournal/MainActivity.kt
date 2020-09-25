@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import org.d3if4048.thewallstreetjournal.favorite.FavoriteFragment
 import org.d3if4048.thewallstreetjournal.home.HomeFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
@@ -48,8 +47,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 title = getString(R.string.app_name)
             }
             R.id.nav_favorite -> {
-                fragment = FavoriteFragment()
-                title = getString(R.string.menu_favorite)
+                val uriFav = Uri.parse("news://favorite")
+                startActivity(Intent(Intent.ACTION_VIEW,uriFav))
             }
             R.id.nav_map -> {
                 val uri = Uri.parse("newsapp://content")
