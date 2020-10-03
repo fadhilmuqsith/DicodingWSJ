@@ -1,6 +1,8 @@
 package org.d3if4048.thewallstreetjournal.core.di
 
 import androidx.room.Room
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.d3if4048.thewallstreetjournal.core.data.NewsRepository
@@ -18,10 +20,12 @@ import java.util.concurrent.TimeUnit
 
 val databaseModule = module { factory { get<NewsDatabase>().newsDao() }
     single {
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("news".toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             NewsDatabase::class.java,"news.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration().openHelperFactory(factory).build()
     }
 }
 
