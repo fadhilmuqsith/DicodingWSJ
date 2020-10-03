@@ -31,7 +31,7 @@ class DetailNewsActivity : AppCompatActivity() {
 
     private fun showDetailNews(detailNews : News?){
         detailNews?.let {
-            var simpleDate = detailNews.publishedAt.substring(0,10)
+            val simpleDate = detailNews.publishedAt.substring(0,10)
             if (detailNews.author != null )  {
                 supportActionBar?.title = detailNews.author
             } else {
