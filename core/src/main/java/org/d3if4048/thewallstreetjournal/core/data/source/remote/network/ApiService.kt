@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.Response
 
 interface ApiService {
-    @GET("everything?domains=wsj.com&apiKey=01d7123930674cc9a179e35f2b770ff3")
+    @GET("v2/everything?domains=wsj.com&apiKey=01d7123930674cc9a179e35f2b770ff3")
     suspend fun getList(): ListNewsResponse
 
 }

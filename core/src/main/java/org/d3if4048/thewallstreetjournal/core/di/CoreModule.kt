@@ -3,6 +3,7 @@ package org.d3if4048.thewallstreetjournal.core.di
 import androidx.room.Room
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.d3if4048.thewallstreetjournal.core.data.NewsRepository
@@ -31,15 +32,20 @@ val databaseModule = module { factory { get<NewsDatabase>().newsDao() }
 
 val networkModule = module {
     single {
+        val hostname = "newsapi.org"
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname,"sha256/LAlZB272xQABCgeTFXzq0MuyQTFpu4lb7LOBjVoJdrE=")
+            .build()
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .connectTimeout(120,TimeUnit.SECONDS)
             .readTimeout(120,TimeUnit.SECONDS)
+            .certificatePinner(certificatePinner)
             .build()
     }
     single {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://newsapi.org/v2/")
+            .baseUrl("http://newsapi.org/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
