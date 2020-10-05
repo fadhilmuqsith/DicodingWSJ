@@ -1,2 +1,2 @@
 # DicodingWSJ
-[![fadhilmuqsith](https://circleci.com/gh/fadhilmuqsith/DicodingWSJ.svg?style=svg)](https://circleci.com/gh/fadhilmuqsith/DicodingWSJ)
+[![fadhilmuqsith](https://circleci.com/gh/fadhilmuqsith/DicodingWSJ.svg?style=shield)](https://circleci.com/gh/fadhilmuqsith/DicodingWSJ)
